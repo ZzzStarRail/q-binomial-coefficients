@@ -1,0 +1,276 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{
+  pdftitle={An infinite family of counterexamples to Stanton's polynomial positivity conjecture},
+  pdfauthor={Zizhou Zhang},
+  pdfsubject={Stanton's 1999 Conjecture 12},
+  pdfkeywords={coefficient positivity, cyclotomic polynomials, integer partitions, counterexamples, AI construction}
+}
+
+\newtheorem{theorem}{Theorem}
+\newcommand{\NN}{\mathbb Z_{\geq0}}
+
+\title{An infinite family of counterexamples to\newline
+Stanton's polynomial positivity conjecture}
+\author{Zizhou Zhang\\[0.5em]
+\small Academy of Mathematics and Systems Science\\
+\small Chinese Academy of Sciences\\
+\small Beijing, China}
+\date{November 26, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Conjecture~12 in Stanton's 1999 survey asserts that a certain factorial
+product quotient associated with a positive integer sequence has
+nonnegative coefficients whenever it is a polynomial. We present an
+explicit counterexample of degree~816 and an infinite family extending
+it. The member indexed by $r\geq0$ has degree $890r+816$ and coefficient
+$-1$ at $q^{300r+277}$. Polynomiality follows from cyclotomic
+factorization, and the negative coefficient is established by parity
+and congruence arguments. The explicit example and the family were
+constructed entirely by OpenAI's Codex (GPT-6).
+\end{abstract}
+
+\medskip
+\noindent\textbf{Keywords.} Coefficient positivity; cyclotomic polynomials;
+integer partitions; counterexamples.
+
+\section{The conjecture and the example}
+
+Let $a_1,\ldots,a_n$ be positive integers and put $N=\sum_{i=1}^n a_i$.
+Stanton \cite[Conjecture~12]{Stanton} conjectured that, if
+\begin{equation}\label{eq:stanton}
+ G_{\boldsymbol a}(q)
+ =\frac{\prod_{j=1}^{N}(1-q^j)}
+        {\prod_{i=1}^{n}(1-q^i)^{a_i}}
+\end{equation}
+is a polynomial in $q$, then all of its coefficients are nonnegative.
+Here the sequence length is denoted consistently by $n$.
+
+Consider the rational function
+\begin{equation}\label{eq:example}
+ Q(q)=\frac{(1-q^{277})(1-q^{278})(1-q^{279})(1-q^{280})}
+ {(1-q^{10})(1-q^{56})(1-q^{93})(1-q^{139})}.
+\end{equation}
+
+\begin{theorem}\label{thm:counterexample}
+The function $Q(q)$ is an integer polynomial of degree $816$, and
+\[
+ [q^{277}]Q(q)=-1.
+\]
+It is an instance of \eqref{eq:stanton} with $n=276$ and $N=280$.
+Consequently, Stanton's Conjecture~12 is false.
+\end{theorem}
+
+\begin{proof}
+We first prove polynomiality. Set
+\[
+ A=\{277,278,279,280\},\qquad B=\{10,56,93,139\},
+\]
+and, for a finite set $E$ and an integer $d\geq1$, write
+$\nu_d(E)=\#\{e\in E:d\mid e\}$. By the cyclotomic factorization
+$q^t-1=\prod_{d\mid t}\Phi_d(q)$, the exponent of $\Phi_d(q)$ in
+\eqref{eq:example} is
+\[
+ e_d=\nu_d(A)-\nu_d(B).
+\]
+For $d=1$, both counts are four. For $d=2$, both counts are two:
+the even elements of $A$ are $278,280$, and those of $B$ are $10,56$.
+The only pair of distinct elements of $B$ with a common divisor greater
+than one is $10,56$, whose greatest common divisor is~$2$.
+Thus, for $d>2$, at most one element of $B$ is divisible by $d$.
+Whenever such an element exists, a multiple of it occurs in $A$, since
+\[
+ 10\mid280,\qquad 56\mid280,\qquad 93\mid279,\qquad 139\mid278.
+\]
+It follows that $e_d\geq0$ for every $d\geq1$, proving
+$Q(q)\in\mathbb Z[q]$. Its degree is
+\[
+ 277+278+279+280-(10+56+93+139)=816.
+\]
+
+We next compute the coefficient at degree $277$. Define $p(t)$ by the
+formal power series
+\[
+ H(q)=\frac1{(1-q^{10})(1-q^{56})(1-q^{93})(1-q^{139})}
+     =\sum_{t\geq0}p(t)q^t.
+\]
+Then $p(t)$ counts the solutions in $\NN^4$ of
+\[
+ 10x+56y+93z+139w=t.
+\]
+We claim that $p(277)=0$. Indeed, a solution at $t=277$ would have
+$w\in\{0,1\}$, because $2\cdot139=278$, and $z+w$ would be odd.
+If $w=1$, the remaining total is $138$. Hence $z=0$, and
+\[
+ 5x+28y=69.
+\]
+This gives $0\leq y\leq2$, whereas reduction modulo $5$ gives
+$y\equiv3\pmod5$, a contradiction. If $w=0$, then $z$ is odd and
+$93z\leq277<3\cdot93$, so $z=1$. We obtain
+\[
+ 5x+28y=92.
+\]
+Now $0\leq y\leq3$, whereas $y\equiv4\pmod5$, another contradiction.
+Therefore $p(277)=0$.
+
+The numerator of \eqref{eq:example} has constant coefficient one,
+coefficient $-1$ at degree $277$, and no terms of degrees $1$ through
+$276$. Since $p(0)=1$, it follows that
+\[
+ [q^{277}]Q(q)=p(277)-p(0)=-1.
+\]
+
+Finally, take $n=276$ and set
+\[
+ a_i=\begin{cases}
+ 2,&i\in\{10,56,93,139\},\\
+ 1,&\text{otherwise},\quad 1\leq i\leq276.
+ \end{cases}
+\]
+All entries are positive, and their sum is $N=280$.
+Cancelling one copy of each factor $1-q^i$, for $1\leq i\leq276$,
+in \eqref{eq:stanton} gives exactly $Q(q)$. Thus the example satisfies
+every hypothesis of the conjecture and violates its conclusion.
+\end{proof}
+
+\section{An infinite family}
+
+The same congruence obstruction gives a counterexample for every
+nonnegative integer $r$. Define
+\begin{equation}\label{eq:family}
+ Q_r(q)=
+ \frac{\prod_{j=277}^{280}(1-q^{300r+j})}
+ {(1-q^{10})(1-q^{60r+56})(1-q^{100r+93})(1-q^{150r+139})}.
+\end{equation}
+The polynomial in \eqref{eq:example} is $Q_0(q)$.
+
+\begin{theorem}\label{thm:family}
+For every integer $r\geq0$, the function $Q_r(q)$ belongs to
+$\mathbb Z[q]$ and satisfies
+\[
+ \deg Q_r=890r+816,
+ \qquad [q^{300r+277}]Q_r(q)=-1.
+\]
+Each $Q_r$ is an instance of \eqref{eq:stanton} with
+$n=300r+276$ and $N=300r+280$. Consequently, these are infinitely many
+distinct counterexamples to Stanton's Conjecture~12.
+\end{theorem}
+
+\begin{proof}
+Fix $r\geq0$, and put
+\[
+ m=30r+28,\qquad u=5m-1,\qquad v=\frac{10m-1}{3},
+ \qquad R=10m-3.
+\]
+Then \eqref{eq:family} becomes
+\[
+ Q_r(q)=\frac{\prod_{j=R}^{R+3}(1-q^j)}
+ {(1-q^{10})(1-q^{2m})(1-q^v)(1-q^u)}.
+\]
+The integer $m$ is even, is congruent to $1$ modulo $3$, and is
+congruent to $3$ modulo $5$. In particular, $u$ and $v$ are odd
+integers, and
+\[
+ 10<2m<v<u<R.
+\]
+
+We verify polynomiality as in Theorem~\ref{thm:counterexample}.
+The four denominator weights have
+$\gcd(10,2m)=2$, and every other pair is coprime.
+Indeed, $u=5m-1$ implies $\gcd(m,u)=\gcd(5,u)=1$.
+The identity $3v=10m-1$ implies $\gcd(m,v)=1$, and
+$v=100r+93\equiv3\pmod5$ gives $\gcd(5,v)=1$.
+Oddness of $u,v$ accounts for the factor $2$, and
+\[
+ 3v-2u=1
+\]
+gives $\gcd(u,v)=1$. For $d=1$, the numerator and denominator each
+have four exponents divisible by $d$; for $d=2$, each has two.
+For $d>2$, at most one denominator weight is divisible by $d$.
+Whenever it is, there is a numerator exponent divisible by that weight,
+because
+\[
+ 2u=R+1,\qquad 3v=R+2,\qquad 10\mid R+3,
+ \qquad 2m\mid R+3.
+\]
+Thus every cyclotomic exponent is nonnegative, and $Q_r(q)\in\mathbb Z[q]$.
+
+To determine the coefficient at degree $R$, suppose that
+\begin{equation}\label{eq:family-representation}
+ R=10x+2my+vz+uw,\qquad x,y,z,w\in\NN.
+\end{equation}
+Since $2u=R+1$ and $3v=R+2$, we have $w\leq1$ and $z\leq2$.
+Also $z+w$ is odd. If $w=1$, then $z$ is even, and
+\[
+ u+2v-R=\frac{5m+4}{3}>0
+\]
+excludes $z=2$. Hence $z=0$, and \eqref{eq:family-representation}
+reduces to
+\[
+ 5x+my=\frac{5m}{2}-1.
+\]
+This implies $y\leq2$. On the other hand, reduction modulo $5$ gives
+$3y\equiv4\pmod5$, hence $y\equiv3\pmod5$, a contradiction.
+
+If $w=0$, then $z=1$, and \eqref{eq:family-representation} reduces to
+\[
+ 5x+my=\frac{10m-4}{3}.
+\]
+Now $y\leq3$. Multiplying by $3$ and reducing modulo $5$ gives
+$4y\equiv1\pmod5$, hence $y\equiv4\pmod5$, again a contradiction.
+There is therefore no representation \eqref{eq:family-representation}.
+The reciprocal denominator has coefficient zero at degree $R$ and
+constant coefficient one. Since the numerator has coefficient $-1$
+at degree $R$ and no terms of degrees $1,\ldots,R-1$, we obtain
+\[
+ [q^R]Q_r(q)=-1.
+\]
+
+The degree is
+\[
+ \deg Q_r=(40m-6)-(10+2m+u+v)
+         =\frac{89m-44}{3}=890r+816.
+\]
+Finally, take $n=10m-4$ and let $a_i=2$ for
+$i\in\{10,2m,v,u\}$ and $a_i=1$ for every other $1\leq i\leq n$.
+All four exceptional indices lie in this range and are distinct, so
+$\sum_{i=1}^n a_i=n+4=10m=N$. Cancelling the factors with indices
+$1,\ldots,n$ in \eqref{eq:stanton} gives $Q_r$.
+The strictly increasing degrees show that these counterexamples are
+distinct.
+\end{proof}
+
+Both proofs use cyclotomic factorization and elementary congruences;
+no polynomial expansion or computational search is required to verify
+the results. The assertion addressed here is
+Conjecture~12 of \cite{Stanton}. It is distinct from Stanton's fake
+Gaussian sequence conjecture (Conjecture~11 in the same paper) and
+from the positivity conjecture for quotients of Gaussian binomial
+coefficients with the same upper argument.
+
+\section*{Construction provenance and AI assistance}
+The explicit counterexample and the infinite family of counterexamples
+presented in this paper were constructed entirely by OpenAI's Codex
+(GPT-6). Codex also assisted with proof development, exploratory
+computations, manuscript drafting, and automated internal consistency
+checks. The author takes responsibility for the content of this paper.
+
+\begin{thebibliography}{1}
+\bibitem{Stanton}
+D.~Stanton,
+\emph{Open positivity conjectures for integer partitions},
+\emph{Trends in Mathematics} \textbf{2} (1999), 19--25.
+Author's manuscript:
+\url{https://www-users.cse.umn.edu/~stant001/PAPERS/korea99.pdf}.
+\end{thebibliography}
+
+\end{document}
